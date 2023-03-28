@@ -9,37 +9,7 @@ import net.objecthunter.exp4j.ExpressionBuilder
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val TAG = MainActivity::class.java.simpleName
-    private var operationsHistory = mutableListOf<String>()
-
-    fun addSymbol(symbol: String) {
-        if (binding.textVisor.text.toString() == "0") {
-            binding.textVisor.text = symbol
-        } else {
-            binding.textVisor.append(symbol)
-        }
-    }
-
-    fun clear() {
-        binding.textVisor.text = "0"
-    }
-
-    fun backspace() {
-        val text = binding.textVisor.text.toString()
-        if (text.isNotEmpty()) {
-            binding.textVisor.text = text.substring(0, text.length - 1)
-        }
-        if (text.isEmpty()) {
-            binding.textVisor.text = "0"
-        }
-    }
-
-    fun equals() {
-        val expression = ExpressionBuilder(
-            binding.textVisor.text.toString()
-        ).build()
-        binding.textVisor.text = expression.evaluate().toString()
-        Log.i(TAG, "O resultado da expressão é ${binding.textVisor.text}")
-    }
+    private var calculator = Calculator()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,94 +23,112 @@ class MainActivity : AppCompatActivity() {
 
         binding.button1.setOnClickListener{
             Log.i(TAG, "Click no botão 1")
-            addSymbol("1")
+            calculator.addSymbol("1")
+            binding.textVisor.text = calculator.getExpression()
         }
 
         binding.button2.setOnClickListener{
             Log.i(TAG, "Click no botão 2")
-            addSymbol("2")
+            calculator.addSymbol("2")
+            binding.textVisor.text = calculator.getExpression()
         }
 
         binding.buttonAdition.setOnClickListener {
             Log.i(TAG, "Click no botão +")
-            addSymbol("+")
+            calculator.addSymbol("+")
+            binding.textVisor.text = calculator.getExpression()
         }
 
         binding.buttonEquals.setOnClickListener {
             Log.i(TAG, "Click no botão =")
-            equals()
+            calculator.equals()
             Log.i(TAG, "O resultado da expressão é ${binding.textVisor.text}")
+            binding.textVisor.text = calculator.getExpression()
         }
 
 
         binding.buttonClear.setOnClickListener {
             Log.i(TAG, "Click no botão C")
-            clear()
+            calculator.clear()
+            binding.textVisor.text = calculator.getExpression()
         }
 
         binding.buttonBackspace.setOnClickListener {
             Log.i(TAG, "Click no botão <")
-            backspace()
+            calculator.backspace()
+            binding.textVisor.text = calculator.getExpression()
         }
 
         binding.buttonDivision.setOnClickListener {
             Log.i(TAG, "Click no botão /")
-            addSymbol("/")
+            calculator.addSymbol("/")
+            binding.textVisor.text = calculator.getExpression()
         }
 
         binding.buttonMultiplication.setOnClickListener {
             Log.i(TAG, "Click no botão *")
-            addSymbol("*")
+            calculator.addSymbol("*")
+            binding.textVisor.text = calculator.getExpression()
         }
 
         binding.buttonSubtraction.setOnClickListener {
             Log.i(TAG, "Click no botão -")
-            addSymbol("-")
+            calculator.addSymbol("-")
+            binding.textVisor.text = calculator.getExpression()
         }
 
         binding.button3.setOnClickListener {
             Log.i(TAG, "Click no botão 3")
-            addSymbol("3")
+            calculator.addSymbol("3")
+            binding.textVisor.text = calculator.getExpression()
         }
 
         binding.button4.setOnClickListener {
             Log.i(TAG, "Click no botão 4")
-            addSymbol("4")
+            calculator.addSymbol("4")
+            binding.textVisor.text = calculator.getExpression()
         }
 
         binding.button5.setOnClickListener {
             Log.i(TAG, "Click no botão 5")
-            addSymbol("5")
+            calculator.addSymbol("5")
+            binding.textVisor.text = calculator.getExpression()
         }
 
         binding.button6.setOnClickListener {
             Log.i(TAG, "Click no botão 6")
-            addSymbol("6")
+            calculator.addSymbol("6")
+            binding.textVisor.text = calculator.getExpression()
         }
 
         binding.button7.setOnClickListener {
             Log.i(TAG, "Click no botão 7")
-            addSymbol("7")
+            calculator.addSymbol("7")
+            binding.textVisor.text = calculator.getExpression()
         }
 
         binding.button8.setOnClickListener {
             Log.i(TAG, "Click no botão 8")
-            addSymbol("8")
+            calculator.addSymbol("8")
+            binding.textVisor.text = calculator.getExpression()
         }
 
         binding.button9.setOnClickListener {
             Log.i(TAG, "Click no botão 9")
-            addSymbol("9")
+            calculator.addSymbol("9")
+            binding.textVisor.text = calculator.getExpression()
         }
 
         binding.button0.setOnClickListener {
             Log.i(TAG, "Click no botão 0")
-            addSymbol("0")
+            calculator.addSymbol("0")
+            binding.textVisor.text = calculator.getExpression()
         }
 
         binding.buttonComma.setOnClickListener {
             Log.i(TAG, "Click no botão ,")
-            addSymbol(".")
+            calculator.addSymbol(".")
+            binding.textVisor.text = calculator.getExpression()
         }
 
 
