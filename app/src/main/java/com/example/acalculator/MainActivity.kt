@@ -11,11 +11,24 @@ import net.objecthunter.exp4j.ExpressionBuilder
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
+    override fun onBackPressed() {
+        if (binding.drawer.isDrawerOpen(GravityCompat.START)) {
+            binding.drawer.closeDrawer(GravityCompat.START)
+        } else if (supportFragmentManager.backStackEntryCount == 1) {
+            finish()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        if(!screenRotated(savedInstanceState)) {
+            NavigationManager.goToCalculatorFragment(supportFragmentManager)
+        }
     }
 
     override fun onStart() {
@@ -40,14 +53,21 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
     }
 
+
     private fun onClickNavigationItem(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.nav_calculator ->
                 NavigationManager.goToCalculatorFragment(
                     supportFragmentManager
                 )
+            R.id.nav_history ->
+                NavigationManager.goToHistoryFragment(
+                    supportFragmentManager
+                )
         }
         binding.drawer.closeDrawer(GravityCompat.START)
         return true
     }
+
+
 }

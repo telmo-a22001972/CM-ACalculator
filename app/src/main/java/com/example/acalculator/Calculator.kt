@@ -15,6 +15,10 @@ class Calculator {
         return operationsHistory.last()
     }
 
+    fun getOperationsHistory(): List<OperationUI> {
+        return operationsHistory
+    }
+
     fun addSymbol(symbol: String) {
         if (expression == "0") {
             expression = symbol
