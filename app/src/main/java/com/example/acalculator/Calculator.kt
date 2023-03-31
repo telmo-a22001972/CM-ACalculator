@@ -3,8 +3,11 @@ package com.example.acalculator
 import android.util.Log
 import net.objecthunter.exp4j.ExpressionBuilder
 
-class Calculator {
-    private var operationsHistory = mutableListOf<OperationUI>()
+object Calculator {
+    private var operationsHistory = mutableListOf<OperationUI>(
+        OperationUI("1+1","2"), OperationUI("2+2", "4")
+    )
+
     private var expression = "0"
 
     fun getExpression(): String {
