@@ -1,13 +1,24 @@
 package com.example.acalculator
 
 import android.util.Log
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import net.objecthunter.exp4j.Expression
 import net.objecthunter.exp4j.ExpressionBuilder
 
 object Calculator {
-    private var operationsHistory = mutableListOf<OperationUI>(
+    private val _operationsHistory = mutableListOf<OperationUI>(
         OperationUI("1+1","2"), OperationUI("2+2", "4")
     )
 
+    val history get() = _operationsHistory.toList()
+
+    fun getHistory(onFinished: (List<OperationUI>) -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch {
+            onFinished(history.toList())
+        }
+    }
     private var expression = "0"
 
     fun getExpression(): String {
@@ -15,11 +26,11 @@ object Calculator {
     }
 
     fun getLastOperation(): OperationUI {
-        return operationsHistory.last()
+        return history.last()
     }
 
     fun getOperationsHistory(): List<OperationUI> {
-        return operationsHistory
+        return history
     }
 
     fun addSymbol(symbol: String) {
@@ -48,8 +59,15 @@ object Calculator {
         val operation = ExpressionBuilder(
             expression
         ).build()
-        operationsHistory.add(OperationUI(expression, operation.evaluate().toString()))
+        CoroutineScope(Dispatchers.IO).launch {
+            addToHistory(expression, operation)
+        }
         expression = operation.evaluate().toString()
+    }
+
+    suspend fun addToHistory(expression: String, operation: Expression) {
+        _operationsHistory.add(OperationUI(Calculator.expression, operation.evaluate().toString()))
+        Log.i("Calculator", "addToHistory: ${history.last()}")
     }
 
 

@@ -8,6 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.acalculator.databinding.FragmentCalculatorBinding
 import com.example.acalculator.databinding.FragmentHistoryBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class HistoryFragment : Fragment() {
@@ -28,11 +31,22 @@ class HistoryFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         val builder = StringBuilder()
-
+        /*
         val history = Calculator.getOperationsHistory()
         Log.i(TAG, "O histórico de operações é $history")
         history.forEach {builder.append("${it.operation}=${it.result}\n")}
         binding.tvHistory.text = builder.toString()
+
+         */
+
+        val history = Calculator.getHistory({ history ->
+            CoroutineScope(Dispatchers.Main).launch {
+                Log.i(TAG, "O histórico de operações é $history")
+                history.forEach {builder.append("${it.operation}=${it.result}\n")}
+                binding.tvHistory.text = builder.toString()
+            }
+        })
+
     }
 
 
